@@ -1,25 +1,34 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import Post from "../components/Post.astro";
+import Paginate from "../components/Paginate.astro";
 import fetchApi from '../lib/strapi';
-import type Post from '../interfaces/post';
-import Layout from '../layouts/Layout.astro';
+import type Article from '../interfaces/article';
 
-const posts = await fetchApi<Post[]>({
-  endpoint: 'posts', // the content type to fetch
+const articles = await fetchApi<Article[]>({
+  endpoint: 'articles?populate=*&sort=id:desc', // the content type to fetch
   wrappedByKey: 'data', // the key to unwrap the response
 });
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<ul>
-        {
-          posts.map((post) => (
-            <a href={`/${post.attributes.slug}/`}>
-              {post.attributes.title}
-            </a>
-          ))
-        }
-   	</ul>
-	</main>
-
+<Layout image="">
+  <main>
+    <div class="t-container t-max-w-7xl t-py-10">
+      {
+          articles.map((article) => (
+          <Post
+            title={article.attributes.title}
+            slug={article.attributes.slug}
+            date={article.attributes.publishedAt}
+            image={article.attributes.image}
+            tags={article.attributes.tags}
+          />
+        ))
+      }
+      <Paginate
+      />
+    </div>
+  </main>
 </Layout>
+
+
