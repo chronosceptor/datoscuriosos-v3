@@ -1,0 +1,39 @@
+---
+import fetchApi from '../lib/strapi';
+import type Post from '../interfaces/post';
+
+export async function getStaticPaths() {
+  const posts = await fetchApi<Post[]>({
+    endpoint: 'posts',
+    wrappedByKey: 'data',
+  });
+
+  return posts.map((post) => ({
+    params: { slug: post.attributes.slug },
+    props: post,
+  }));
+}
+type Props = Post;
+
+const post = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+       <meta charset="UTF-8">
+    <title>{post.attributes.title}</title>
+  </head>
+
+  <body>
+    <main>
+
+      <h1>{post.attributes.title}</h1>
+
+      <!-- Render plain text -->
+      <p>{post.attributes.content}</p>
+        {post.attributes.content}
+      <Fragment set:html={post.attributes.content} />
+    </main>
+  </body>
+</html>

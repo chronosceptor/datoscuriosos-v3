@@ -1,0 +1,25 @@
+---
+import fetchApi from '../lib/strapi';
+import type Post from '../interfaces/post';
+import Layout from '../layouts/Layout.astro';
+
+const posts = await fetchApi<Post[]>({
+  endpoint: 'posts', // the content type to fetch
+  wrappedByKey: 'data', // the key to unwrap the response
+});
+---
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<ul>
+        {
+          posts.map((post) => (
+            <a href={`/${post.attributes.slug}/`}>
+              {post.attributes.title}
+            </a>
+          ))
+        }
+   	</ul>
+	</main>
+
+</Layout>
