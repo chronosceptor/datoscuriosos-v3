@@ -4,26 +4,27 @@ import PostTags from "../components/PostTags.astro";
 import PostDate from "../components/PostDate.astro";
 import BackgroundPicture from "../components/BackgroundPicture.astro";
 import AdNative from "../components/AdNative.astro";
-
 import "../css/slug.scss";
+import fetchApi from '../lib/strapi';
+import type Post from '../interfaces/post';
 
 export async function getStaticPaths() {
-  const posts = await Astro.glob("../content/**/*.mdx");
+  const posts = await fetchApi<Post[]>({
+    endpoint: 'posts',
+    wrappedByKey: 'data',
+  });
 
   return posts.map((post) => ({
-    params: {
-      slug: post.frontmatter.slug,
-    },
-    props: {
-      post,
-    },
+    params: { slug: post.attributes.slug },
+    props: post,
   }));
 }
+type Props = Post;
 
-const { Content, frontmatter } = Astro.props.post;
+const post = Astro.props;
 ---
 
-<Layout title={frontmatter.title} image={frontmatter.image}>
+<Layout title="titulo" image="imagen">
   <main>
     <div class="t-container t-max-w-7xl md:t-py-20">
       <div class="t-flex t-flex-col">
@@ -31,20 +32,20 @@ const { Content, frontmatter } = Astro.props.post;
           class="t-order-2 t-mx-auto t-mb-5 t-pt-10 sm:t-px-[10vw] md:t-order-1 md:t-pt-0"
         >
           <h1 class="slug word-wrap t-mb-5 t-font-p t-text-white">
-            {frontmatter.title}
+            "titulo"
           </h1>
 
           <h2 class="slug word-wrap t-mb-5 t-font-s t-text-3xl t-text-white">
-            {frontmatter.subtitle}
+            "subtitulo"
           </h2>
 
-          {frontmatter.date && <PostDate date={frontmatter.date} />}
+          {"fecha" && <PostDate date={"fecha"} />}
         </div>
 
         {
-          frontmatter.image && (
+          "imagen" && (
             <BackgroundPicture
-              src={frontmatter.image}
+              src="imagen"
               breakpoints={{ count: 4, minWidth: 750, maxWidth: 2048 }}
               class={``}
             />
@@ -59,7 +60,7 @@ const { Content, frontmatter } = Astro.props.post;
         <div>
           <AdNative />
         </div>
-        {frontmatter.tags && <PostTags tags={frontmatter.tags} />}
+        {"tags" && <PostTags tags={"tags"} />}
       </div>
     </div>
   </main>

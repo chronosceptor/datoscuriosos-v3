@@ -1,40 +1,12 @@
-import { defineConfig } from "astro/config";
+import { defineConfig } from 'astro/config';
+import mdx from "@astrojs/mdx";
+import partytown from "@astrojs/partytown";
+import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 
-// https://astro-imagetools-docs.vercel.app/en
-import { astroImageTools } from "astro-imagetools";
-
-import prefetch from "@astrojs/prefetch";
-
-// https://astro.build/config
-import mdx from "@astrojs/mdx";
-
-// https://astro.build/config
-import partytown from "@astrojs/partytown";
-
-// https://astro.build/config
 import compress from "astro-compress";
 
 // https://astro.build/config
-import sitemap from "@astrojs/sitemap";
-
-// https://astro.build/config
 export default defineConfig({
-  site: "https://datoscuriosos.org",
-  integrations: [
-    tailwind(),
-    astroImageTools,
-    prefetch(),
-    mdx(),
-    partytown({
-      config: {
-        forward: ["dataLayer.push"],
-      },
-    }),
-    compress({
-      css: false,
-      img: false,
-    }),
-    sitemap(),
-  ],
+  integrations: [mdx(), partytown(), sitemap(), tailwind(), compress()]
 });
