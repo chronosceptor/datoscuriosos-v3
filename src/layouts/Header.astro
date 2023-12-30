@@ -1,0 +1,14 @@
+---
+import HeaderLogo from "../components/HeaderLogo.astro";
+import HeaderNav from "../components/HeaderNav.astro";
+import config from "../../public/site/config.json";
+---
+
+<header class="t-border-b t-border-dark">
+  <div
+    class="t-container t-flex t-max-w-7xl t-items-center t-justify-between t-py-3"
+  >
+    <HeaderLogo alt={config.siteName} src={config.siteLogo} class={``} />
+    <HeaderNav />
+  </div>
+</header>

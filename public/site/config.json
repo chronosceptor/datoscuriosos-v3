@@ -1,0 +1,60 @@
+{
+    "siteName": "Datos Curiosos",
+    "siteDomain": "datoscuriosos.org",
+    "siteLogo": "img/logo.png",
+    "pageSize": 20,
+    "headerNav": [
+        {
+            "name": "Inicio",
+            "url": "https://datoscuriosos.org",
+            "target": "_self"
+        },
+        {
+            "name": "Tags",
+            "url": "https://datoscuriosos.org/tags",
+            "target": "_self"
+        }
+    ],
+    "footerNav": [
+        {
+            "name": "Instagram",
+            "url": "https://instagram.com/datoscuriososorg/",
+            "target": "_blank"
+        },
+        {
+            "name": "Twitter",
+            "url": "https://twitter.com/datoscuriosos_o",
+            "target": "_blank"
+        },
+        {
+            "name": "Facebook",
+            "url": "https://www.facebook.com/datoscuriosos.org",
+            "target": "_blank"
+        },
+        {
+            "name": "Acerca",
+            "url": "https://datoscuriosos.org/acerca",
+            "target": "_self"
+        },
+        {
+            "name": "Contacto",
+            "url": "https://datoscuriosos.org/contacto",
+            "target": "_self"
+        },
+        {
+            "name": "Privacy Policy",
+            "url": "https://datoscuriosos.org/privacy-policy",
+            "target": "_self"
+        },
+        {
+            "name": "Disclaimer",
+            "url": "https://datoscuriosos.org/disclaimer",
+            "target": "_self"
+        },
+        {
+            "name": "DMCA",
+            "url": "https://datoscuriosos.org/dmca",
+            "target": "_self"
+        }
+    ]
+}

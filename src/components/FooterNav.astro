@@ -1,0 +1,19 @@
+---
+import config from "../../public/site/config.json";
+---
+
+<nav class="t-font-s">
+  {
+    config.footerNav.map((nav) => (
+      <a
+        href={nav.url}
+        target={nav.target}
+        class="t-mx-2 t-inline-block t-py-4 t-text-sm t-text-grey hover:t-text-white"
+        rel="prefetch"
+        aria-label={nav.name}
+      >
+        {nav.name}
+      </a>
+    ))
+  }
+</nav>

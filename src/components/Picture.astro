@@ -1,0 +1,16 @@
+---
+import { Picture } from "astro-imagetools/components";
+const { class: scope, style, caption, ...props } = Astro.props;
+---
+
+<div class="t-mx-[-1rem] t-mb-10 sm:t-mx-[calc(-10vw-1rem)] md:t-mx-0">
+  <Picture
+    {...props}
+    attributes={{
+      img: {
+        class: `${scope} md:t-rounded-3xl`,
+        style,
+      },
+    }}
+  />
+</div>

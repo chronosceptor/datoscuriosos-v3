@@ -1,0 +1,26 @@
+---
+import PostThumb from "./PostThumb.astro";
+import PostTags from "./PostTags.astro";
+import PostTitle from "./PostTitle.astro";
+import PostDate from "./PostDate.astro";
+const { title, slug, date, image, tags } = Astro.props;
+---
+
+<div class="t-mb-12 t-flex t-flex-wrap md:t-flex-nowrap">
+  <div class="t-w-full md:t-w-5/12">
+    <a href={`/${slug}`} aria-label={title}>
+      <PostThumb
+        src={image}
+        breakpoints={{ count: 4, minWidth: 750, maxWidth: 2048 }}
+        class={``}
+      />
+    </a>
+  </div>
+  <div class="t-flex t-w-full t-items-center md:t-w-7/12 md:t-pl-5 lg:t-pl-10">
+    <div>
+      <PostTitle slug={slug} title={title} />
+      <PostDate date={date} />
+      <PostTags tags={tags} />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "Monument";
+    src: url("../fonts/monument.eot");
+    src: url("../fonts/monument.eot?#iefix") format("embedded-opentype"), url("../fonts/monument.woff2") format("woff2"),
+        url("../fonts/monument.woff") format("woff"), url("../fonts/monument.otf") format("otf"),
+        url("../fonts/monument.ttf") format("truetype");
+    font-display: swap;
+}
+
+.word-wrap {
+    word-wrap: anywhere;
+}

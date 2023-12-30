@@ -1,0 +1,21 @@
+---
+import config from "../../public/site/config.json";
+import { Picture } from "astro-imagetools/components";
+const { class: scope, style, ...props } = Astro.props;
+---
+
+<a
+  href="/"
+  class="t-flex t-items-center t-font-p t-text-xs t-capitalize t-text-white sm:t-text-sm md:t-text-base"
+>
+  <Picture
+    {...props}
+    attributes={{
+      img: {
+        class: `${scope} t-mr-2 t-inline-block t-h-12 t-w-12 t-rounded-full t-border-2`,
+        style,
+      },
+    }}
+  />
+  {config.siteName}
+</a>

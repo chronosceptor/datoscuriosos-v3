@@ -1,51 +1,102 @@
 ---
-interface Props {
-	title: string;
-}
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
+import config from "../../public/site/config.json";
+import { AstroSeo } from "@astrolib/seo";
+import "../css/global.css";
+const { title, image } = Astro.props;
 
-const { title } = Astro.props;
+function ogImage(image) {
+  if (image) {
+    let ogImage = `https://res.cloudinary.com/chronosceptor/image/upload/c_fill,g_auto,h_630,w_1200/b_rgb:000000,e_gradient_fade,y_-0.5/c_fit,co_rgb:ffffff,fl_relative,g_south_west,l_text:montserrat_60_style_align_left:${encodeURIComponent(
+      title
+    )},w_1100,x_50,y_100/c_fit,co_rgb:ffffff,g_south_west,l_text:montserrat_30_style_align_left:${
+      config.siteDomain
+    },w_1100,x_50,y_50/${image.replaceAll(
+      "https://res.cloudinary.com/chronosceptor/image/upload/",
+      ""
+    )}`;
+    return ogImage;
+  } else {
+    return "hola";
+  }
+}
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href={config.siteLogo} />
+    <meta name="generator" content={Astro.generator} />
+    <title>
+      {title}{title && " - "}{config.siteName}
+    </title>
+    <AstroSeo
+      title={title}
+      description="This example uses more of the available config options."
+      canonical={Astro.url}
+      openGraph={{
+        url: Astro.url,
+        title: title,
+        description: "Open Graph Description",
+        images: [
+          {
+            url: ogImage(image),
+            width: 1200,
+            height: 630,
+            alt: title,
+            type: "image/jpeg",
+          },
+        ],
+        site_name: config.siteName,
+      }}
+      twitter={{
+        handle: "@handle",
+        site: "@site",
+        cardType: "summary_large_image",
+      }}
+    />
+    <meta property="og:type" content="website" />
+    <meta property="fb:app_id" content="585017746943359" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <GoogleFontsOptimizer
+      url="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    />
+
+    <script
+      type="text/partytown"
+      src="https://www.googletagmanager.com/gtag/js?id=G-0MYW73B9KR"
+    ></script>
+    <script type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-0MYW73B9KR");
+    </script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2751592018563341"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <Header title={title} />
+    <slot />
+    <Footer />
+    <style is:global>
+      html,
+      body {
+        @apply t-bg-black;
+      }
+    </style>
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>

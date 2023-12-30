@@ -1,0 +1,18 @@
+---
+import json from "../../public/site/config.json";
+---
+
+<nav class="t-flex t-font-s">
+  {
+    json.headerNav.map((nav) => (
+      <a
+        href={nav.url}
+        target={nav.target}
+        class="t-ml-5  t-text-sm t-text-grey sm:t-text-base"
+        rel="prefetch"
+      >
+        {nav.name}
+      </a>
+    ))
+  }
+</nav>

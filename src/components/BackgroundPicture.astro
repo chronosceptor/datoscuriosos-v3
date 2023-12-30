@@ -1,0 +1,28 @@
+---
+import {
+  BackgroundPicture,
+  ImageSupportDetection,
+} from "astro-imagetools/components";
+
+const { class: scope, style, ...props } = Astro.props;
+---
+
+<div class="t-order-1 t-mx-[-1rem] md:t-order-2 md:t-mx-0">
+  <BackgroundPicture
+    {...props}
+    attributes={{
+      picture: {
+        class: `${scope} t-w-full t-aspect-[16/8] md:t-rounded-3xl`,
+        style,
+      },
+      img: {
+        class: `${scope} t-w-full t-aspect-[16/8] md:t-rounded-3xl`,
+        style,
+      },
+      container: {
+        class: `${scope} t-w-full t-aspect-[16/8] md:t-rounded-3xl`,
+        style,
+      },
+    }}
+  />
+</div>

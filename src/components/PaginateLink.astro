@@ -1,0 +1,30 @@
+---
+const { icon, href } = Astro.props;
+---
+
+<li class="t-mx-4">
+  <a href={href} aria-label="Go to page" class="t-text-grey">
+    {
+      icon == "p" && (
+        <svg xmlns="http://www.w3.org/2000/svg" width="31" height="50">
+          <path
+            fill="#B5B3A7"
+            fill-rule="nonzero"
+            d="m.805 26.943 22.252 22.252a2.748 2.748 0 0 0 3.886 0l2.595-2.595a2.748 2.748 0 0 0 .005-3.882L11.908 25 29.543 7.282a2.748 2.748 0 0 0-.005-3.882L26.943.805a2.748 2.748 0 0 0-3.886 0L.805 23.057a2.748 2.748 0 0 0 0 3.886Z"
+          />
+        </svg>
+      )
+    }
+    {
+      icon == "n" && (
+        <svg xmlns="http://www.w3.org/2000/svg" width="31" height="50">
+          <path
+            fill="#B5B3A7"
+            fill-rule="nonzero"
+            d="M29.539 26.943 7.286 49.195a2.748 2.748 0 0 1-3.886 0L.805 46.6A2.748 2.748 0 0 1 .8 42.718L18.435 25 .8 7.282A2.748 2.748 0 0 1 .805 3.4L3.4.805a2.748 2.748 0 0 1 3.886 0l22.252 22.252a2.748 2.748 0 0 1 0 3.886Z"
+          />
+        </svg>
+      )
+    }
+  </a>
+</li>

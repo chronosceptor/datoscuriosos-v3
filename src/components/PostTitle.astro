@@ -1,0 +1,12 @@
+---
+export interface Props {
+  date: string;
+}
+const { slug, title } = Astro.props;
+---
+
+<a href={`/${slug}`} aria-label={title} class="t-font-p t-text-white">
+  <h2 class="word-wrap t-mb-1 t-text-2xl sm:t-text-3xl lg:t-text-4xl">
+    {title}
+  </h2>
+</a>

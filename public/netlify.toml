@@ -1,0 +1,29 @@
+[[redirects]]
+  from = "https://datoscuriosos.netlify.app"
+  to = "https://datoscuriosos.org"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://datoscuriosos.info"
+  to = "https://datoscuriosos.org"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/90-porciento-del-agua-dulce-del-mundo-esta-en-la-antartida"
+  to = "/10-datos-curiosos-que-no-sabias-sobre-la-antartida-el-continente-blanco"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/los-anillos-de-saturno-no-son-solidos-están-formados-por-trozos-de-hielo-polvo-y-roca"
+  to = "/10-datos-curiosos-que-no-sabias-sobre-saturno-el-planeta-de-los-anillos"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/28800-patos-de-banera-perdidos-por-el-mar"
+  to = "/mas-de-29000-patos-salvavidas-perdidos-por-el-mar"
+  status = 301
+  force = true

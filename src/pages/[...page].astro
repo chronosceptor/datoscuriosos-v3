@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Post from "../components/Post.astro";
+import Paginate from "../components/Paginate.astro";
+import config from "../../public/site/config.json";
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await Astro.glob("../content/posts/*.mdx");
+  posts.sort(
+    (a, b) => Date.parse(b.frontmatter.date) - Date.parse(a.frontmatter.date)
+  );
+  const nonDraftPosts = posts.filter((post) => !post.frontmatter.draft);
+
+  return paginate(nonDraftPosts, {
+    pageSize: config.pageSize,
+  });
+}
+const { page } = Astro.props;
+---
+
+<Layout image="">
+  <main>
+    <div class="t-container t-max-w-7xl t-py-10">
+      {
+        page.data.map((post) => (
+          <Post
+            title={post.frontmatter.title}
+            slug={post.frontmatter.slug}
+            date={post.frontmatter.date}
+            image={post.frontmatter.image}
+            tags={post.frontmatter.tags}
+          />
+        ))
+      }
+      <Paginate
+        current={page.url.current}
+        prev={page.url.prev}
+        next={page.url.next}
+      />
+    </div>
+  </main>
+</Layout>
