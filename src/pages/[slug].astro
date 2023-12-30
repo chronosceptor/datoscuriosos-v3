@@ -1,67 +1,39 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import PostTags from "../components/PostTags.astro";
-import PostDate from "../components/PostDate.astro";
-import BackgroundPicture from "../components/BackgroundPicture.astro";
-import AdNative from "../components/AdNative.astro";
-import "../css/slug.scss";
 import fetchApi from '../lib/strapi';
-import type Post from '../interfaces/post';
+import type Post from '../interfaces/article';
 
 export async function getStaticPaths() {
-  const posts = await fetchApi<Post[]>({
-    endpoint: 'posts',
+  const articles = await fetchApi<Article[]>({
+    endpoint: 'articles',
     wrappedByKey: 'data',
   });
 
-  return posts.map((post) => ({
-    params: { slug: post.attributes.slug },
-    props: post,
+  return articles.map((article) => ({
+    params: { slug: article.attributes.slug },
+    props: article,
   }));
 }
-type Props = Post;
+type Props = Article;
 
-const post = Astro.props;
+const article = Astro.props;
 ---
 
-<Layout title="titulo" image="imagen">
-  <main>
-    <div class="t-container t-max-w-7xl md:t-py-20">
-      <div class="t-flex t-flex-col">
-        <div
-          class="t-order-2 t-mx-auto t-mb-5 t-pt-10 sm:t-px-[10vw] md:t-order-1 md:t-pt-0"
-        >
-          <h1 class="slug word-wrap t-mb-5 t-font-p t-text-white">
-            "titulo"
-          </h1>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+       <meta charset="UTF-8">
+    <title>{article.attributes.title}</title>
+  </head>
 
-          <h2 class="slug word-wrap t-mb-5 t-font-s t-text-3xl t-text-white">
-            "subtitulo"
-          </h2>
+  <body>
+    <main>
 
-          {"fecha" && <PostDate date={"fecha"} />}
-        </div>
+      <h1>{article.attributes.title}</h1>
 
-        {
-          "imagen" && (
-            <BackgroundPicture
-              src="imagen"
-              breakpoints={{ count: 4, minWidth: 750, maxWidth: 2048 }}
-              class={``}
-            />
-          )
-        }
-      </div>
-
-      <div class="t-mx-auto t-my-5 t-mb-5 sm:t-my-10 sm:t-px-[10vw]">
-        <div class="rtm t-mb-16 t-text-white">
-          <Content />
-        </div>
-        <div>
-          <AdNative />
-        </div>
-        {"tags" && <PostTags tags={"tags"} />}
-      </div>
-    </div>
-  </main>
-</Layout>
+      <!-- Render plain text -->
+      <p>{article.attributes.content}</p>
+        {article.attributes.content}
+      <Fragment set:html={article.attributes.content} />
+    </main>
+  </body>
+</html>

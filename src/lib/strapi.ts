@@ -34,9 +34,8 @@ export default async function fetchApi<T>({
     });
   }
 
-  // Check if headers are provided
-  const requestOptions: RequestInit = {
-    method: 'GET', // You can modify this based on your needs
+const requestOptions: RequestInit = {
+    method: 'GET',
     headers: {
       ...headers,
       Authorization: `Bearer ${import.meta.env.STRAPI_TOKEN}`,
