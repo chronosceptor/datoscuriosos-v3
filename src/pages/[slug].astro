@@ -1,6 +1,6 @@
 ---
 import fetchApi from '../lib/strapi';
-import type Post from '../interfaces/article';
+import type Article from '../interfaces/article';
 import Layout from "../layouts/Layout.astro";
 import PostTags from "../components/PostTags.astro";
 import PostDate from "../components/PostDate.astro";
@@ -40,7 +40,7 @@ const article = Astro.props;
             {article.attributes.subtitle}
           </h2>
 
-          {article.attributes.date && <PostDate date={article.attributes.date} />}
+          {article.attributes.publishedAt && <PostDate date={article.attributes.publishedAt} />}
         </div>
 
         {

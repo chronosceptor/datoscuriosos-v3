@@ -1,6 +1,11 @@
 ---
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
+import {
+  BackgroundPicture,
+  ImageSupportDetection,
+} from "astro-imagetools/components";
+
 import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
 import config from "../../public/site/config.json";
 import { AstroSeo } from "@astrolib/seo";
@@ -87,6 +92,8 @@ function ogImage(image) {
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2751592018563341"
       crossorigin="anonymous"
     ></script>
+
+        <ImageSupportDetection />
   </head>
   <body>
     <Header title={title} />
