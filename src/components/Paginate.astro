@@ -2,7 +2,7 @@
 import PaginateLink from "./PaginateLink.astro";
 import PaginateNoLink from "./PaginateNoLink.astro";
 
-const { page, total } = Astro.props;
+const { current, prev, next } = Astro.props;
 ---
 
 <nav
@@ -11,9 +11,11 @@ const { page, total } = Astro.props;
   class="t-flex t-justify-center"
 >
   <ul class="t-flex">
-    <a href="../">first page</a>
-    <a href="#">prev page</a>
-    <a href="#">next page</a>
-    <a href={total}>last page</a>
+    {current == "/2" && <PaginateLink icon="p" href="../" />}
+    {prev && current != "/2" && <PaginateLink icon="p" href={prev} />}
+    {prev == undefined && <PaginateNoLink icon="p" />}
+
+    {next && <PaginateLink icon="n" href={next} />}
+    {next == undefined && <PaginateNoLink icon="n" />}
   </ul>
 </nav>
