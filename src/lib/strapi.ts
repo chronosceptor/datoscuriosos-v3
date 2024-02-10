@@ -3,7 +3,7 @@ interface Props {
   query?: Record<string, string>;
   wrappedByKey?: string;
   wrappedByList?: boolean;
-  headers?: Record<string, string>; // Add headers property
+  headers?: Record<string, string> | undefined; // Make headers optional
 }
 
 /**
@@ -20,8 +20,8 @@ export default async function fetchApi<T>({
   query,
   wrappedByKey,
   wrappedByList,
-  headers, // Add headers parameter
-}: Props): Promise<T> {
+  headers,
+}: Props): Promise<T | T[]> {
   if (endpoint.startsWith('/')) {
     endpoint = endpoint.slice(1);
   }
@@ -34,11 +34,11 @@ export default async function fetchApi<T>({
     });
   }
 
-const requestOptions: RequestInit = {
+  const requestOptions: RequestInit = {
     method: 'GET',
     headers: {
-      ...headers,
-      Authorization: `Bearer ${import.meta.env.STRAPI_TOKEN}`,
+      ...(headers || {}),
+      ...(import.meta.env.STRAPI_TOKEN && { Authorization: `Bearer ${import.meta.env.STRAPI_TOKEN}` }),
     },
   };
 
@@ -49,9 +49,9 @@ const requestOptions: RequestInit = {
     data = data[wrappedByKey];
   }
 
-  if (wrappedByList) {
-    data = data[0];
+  if (wrappedByList && Array.isArray(data)) {
+    data = data[0]; // Take the first item if it's an array
   }
 
-  return data as T;
+  return data as T | T[];
 }

@@ -16,8 +16,8 @@ export async function getStaticPaths() {
   });
 
   return articles.map((article) => ({
-    params: { slug: article.attributes.slug },
-    props: article,
+    params: { slug: Array.isArray(article) ? article[0].attributes.slug : article.attributes.slug },
+    props: Array.isArray(article) ? article[0] : article,
   }));
 }
 type Props = Article;
