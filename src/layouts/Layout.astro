@@ -2,7 +2,6 @@
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
 import {
-  BackgroundPicture,
   ImageSupportDetection,
 } from "astro-imagetools/components";
 
@@ -12,7 +11,7 @@ import { AstroSeo } from "@astrolib/seo";
 import "../css/global.css";
 const { title, image } = Astro.props;
 
-function ogImage(image) {
+function ogImage(image:any) {
   if (image) {
     let ogImage = `https://res.cloudinary.com/chronosceptor/image/upload/c_fill,g_auto,h_630,w_1200/b_rgb:000000,e_gradient_fade,y_-0.5/c_fit,co_rgb:ffffff,fl_relative,g_south_west,l_text:montserrat_60_style_align_left:${encodeURIComponent(
       title
@@ -42,9 +41,9 @@ function ogImage(image) {
     <AstroSeo
       title={title}
       description="This example uses more of the available config options."
-      canonical={Astro.url}
+      canonical={String(Astro.url)}
       openGraph={{
-        url: Astro.url,
+        url: String(Astro.url),
         title: title,
         description: "Open Graph Description",
         images: [

@@ -1,9 +1,9 @@
 ---
 import PostThumb from "./PostThumb.astro";
-import PostTags from "./PostTags.astro";
+// import PostTags from "./PostTags.astro";
 import PostTitle from "./PostTitle.astro";
 import PostDate from "./PostDate.astro";
-const { title, slug, date, image, tags } = Astro.props;
+const { title, slug, date, image } = Astro.props;
 ---
 
 <div class="t-mb-12 t-flex t-flex-wrap md:t-flex-nowrap">
@@ -20,7 +20,7 @@ const { title, slug, date, image, tags } = Astro.props;
     <div>
       <PostTitle slug={slug} title={title} />
       <PostDate date={date} />
-      <PostTags tags={tags} />
+      <!-- <PostTags tags={tags} /> -->
     </div>
   </div>
 </div>

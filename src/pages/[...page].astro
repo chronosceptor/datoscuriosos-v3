@@ -23,7 +23,7 @@ const { page } = Astro.props;
   <main>
     <div class="t-container t-max-w-7xl t-py-10">
       {
-          page.data.map((article) => (
+          page.data.map((article:any) => (
           <Post
             title={article.attributes.title}
             slug={article.attributes.slug}
