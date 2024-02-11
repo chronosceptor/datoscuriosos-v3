@@ -18,8 +18,7 @@ export async function getStaticPaths({ paginate }: { paginate: any }) {
   });
 }
 
-const { page }: { page: { data: any[] } } = Astro.props; // Explicitly define the type of page
-
+const { page }: { page: { data: any[]; url: { current: string; prev: string; next: string } } } = Astro.props;
 ---
 
 <Layout image="">
