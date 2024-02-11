@@ -1,14 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Post from "../components/Post.astro";
-// import Paginate from "../components/Paginate.astro";
+import Paginate from "../components/Paginate.astro";
 import fetchApi from '../lib/strapi';
 import type Article from '../interfaces/article';
 import config from "../../public/site/config.json";
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
   const articles = await fetchApi<Article[]>({
-    endpoint: 'articles?pagination[pageSize]=100&populate=*&sort=id:desc',
+    endpoint: `articles?pagination[pageSize]=1000&populate=*&sort=id:desc`,
   });
 
   const paginatedArticles = Array.isArray(articles) ? articles : ('data' in articles && articles['data']) || [];
@@ -37,11 +37,11 @@ const { page }: { page: { data: any[] } } = Astro.props; // Explicitly define th
         ))
       }
 
-      <!--         <Paginate
-        current={page.url.current}
-        prev={page.url.prev}
-        next={page.url.next}
-      /> -->
+      <Paginate
+      current={page.url.current}
+      prev={page.url.prev}
+      next={page.url.next}
+      />
 
     </div>
   </main>
