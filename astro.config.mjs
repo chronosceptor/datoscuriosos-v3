@@ -11,7 +11,7 @@ import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
-import compress from "astro-compress";
+// import compress from "astro-compress";
 
 // https://astro.build/config
 import sitemap from "@astrojs/sitemap";
@@ -27,10 +27,6 @@ export default defineConfig({
       config: {
         forward: ["dataLayer.push"],
       },
-    }),
-    compress({
-      css: false,
-      img: false,
     }),
     sitemap(),
   ],

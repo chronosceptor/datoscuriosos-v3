@@ -11,8 +11,8 @@ import "../css/slug.scss";
 
 export async function getStaticPaths() {
   const articles = await fetchApi<Article[]>({
-    endpoint: 'articles',
-    wrappedByKey: 'data',
+    endpoint: 'articles?pagination[pageSize]=100000&populate=*&sort=id:desc',
+    wrappedByKey: 'data'
   });
 
   return articles.map((article) => ({

@@ -8,7 +8,7 @@ import config from "../../public/site/config.json";
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
   const articles = await fetchApi<Article[]>({
-    endpoint: `articles?pagination[pageSize]=1000&populate=*&sort=id:desc`,
+    endpoint: `articles?pagination[pageSize]=100000&populate=*&sort=id:desc`,
   });
 
   const paginatedArticles = Array.isArray(articles) ? articles : ('data' in articles && articles['data']) || [];
