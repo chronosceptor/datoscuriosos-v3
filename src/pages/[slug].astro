@@ -1,24 +1,33 @@
 ---
-import fetchApi from '../lib/strapi';
-import type Article from '../interfaces/article';
+import fetchApi from "../lib/strapi";
+import type Article from "../interfaces/article";
 import Layout from "../layouts/Layout.astro";
 // import PostTags from "../components/PostTags.astro";
+
+import Content from "../components/Content.astro";
+
 import PostDate from "../components/PostDate.astro";
+
 import BgPicture from "../components/BgPicture.astro";
 import AdNative from "../components/AdNative.astro";
 
 import "../css/slug.scss";
 
 export async function getStaticPaths() {
-  const articles = await fetchApi<Article[]>({
-    endpoint: 'articles?pagination[pageSize]=100000&populate=*&sort=id:desc',
-    wrappedByKey: 'data'
-  });
+	const articles = await fetchApi<Article[]>({
+		endpoint:
+			"articles?pagination[pageSize]=100000&populate=*&sort=id:desc",
+		wrappedByKey: "data",
+	});
 
-  return articles.map((article) => ({
-    params: { slug: Array.isArray(article) ? article[0].attributes.slug : article.attributes.slug },
-    props: Array.isArray(article) ? article[0] : article,
-  }));
+	return articles.map((article) => ({
+		params: {
+			slug: Array.isArray(article)
+				? article[0].attributes.slug
+				: article.attributes.slug,
+		},
+		props: Array.isArray(article) ? article[0] : article,
+	}));
 }
 type Props = Article;
 
@@ -26,42 +35,51 @@ const article = Astro.props;
 ---
 
 <Layout title={article.attributes.title} image={article.attributes.image}>
-  <main>
-    <div class="t-container t-max-w-7xl md:t-py-20">
-      <div class="t-flex t-flex-col">
-        <div
-          class="t-order-2 t-mx-auto t-mb-5 t-pt-10 sm:t-px-[10vw] md:t-order-1 md:t-pt-0"
-        >
-          <h1 class="slug word-wrap t-mb-5 t-font-p t-text-white">
-            {article.attributes.title}
-          </h1>
+	<main>
+		<div class="t-container t-max-w-7xl md:t-py-20">
+			<div class="t-flex t-flex-col">
+				<div
+					class="t-order-2 t-mx-auto t-mb-5 t-pt-10 sm:t-px-[10vw] md:t-order-1 md:t-pt-0"
+				>
+					<h1 class="slug word-wrap t-mb-5 t-font-p t-text-white">
+						{article.attributes.title}
+					</h1>
 
-          <h2 class="slug word-wrap t-mb-5 t-font-s t-text-3xl t-text-white">
-            {article.attributes.subtitle}
-          </h2>
+					{
+						article.attributes.publishedAt && (
+							<PostDate date={article.attributes.publishedAt} />
+						)
+					}
+				</div>
 
-          {article.attributes.publishedAt && <PostDate date={article.attributes.publishedAt} />}
-        </div>
+				{
+					article.attributes.image && (
+						<BgPicture
+							src={article.attributes.image}
+							breakpoints={{
+								count: 4,
+								minWidth: 750,
+								maxWidth: 2048,
+							}}
+							class={``}
+						/>
+					)
+				}
+			</div>
 
-        {
-          article.attributes.image && (
-            <BgPicture
-              src={article.attributes.image}
-              breakpoints={{ count: 4, minWidth: 750, maxWidth: 2048 }}
-              class={``}
-            />
-          )
-        }
-      </div>
-
-      <div class="t-mx-auto t-my-5 t-mb-5 sm:t-my-10 sm:t-px-[10vw]">
-        <div class="rtm t-mb-16 t-text-white">
-        </div>
-        <div>
-          <AdNative />
-        </div>
-        <!-- {article.attributes.tags && <PostTags tags={article.attributes.tags} />} -->
-      </div>
-    </div>
-  </main>
+			<div class="t-mx-auto t-my-5 t-mb-5 sm:t-my-10 sm:t-px-[10vw]">
+				<div>
+					{
+						article.attributes.content && (
+							<Content content={article.attributes.content}/>
+						)
+					}
+				</div>
+				<div>
+					<AdNative />
+				</div>
+				<!-- {article.attributes.tags && <PostTags tags={article.attributes.tags} />} -->
+			</div>
+		</div>
+	</main>
 </Layout>
