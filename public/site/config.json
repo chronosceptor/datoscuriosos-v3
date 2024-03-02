@@ -6,12 +6,12 @@
     "headerNav": [
         {
             "name": "Inicio",
-            "url": "https://datoscuriosos.org",
+            "url": "/",
             "target": "_self"
         },
         {
             "name": "Tags",
-            "url": "https://datoscuriosos.org/tags",
+            "url": "/tags",
             "target": "_self"
         }
     ],
