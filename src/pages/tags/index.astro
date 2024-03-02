@@ -3,10 +3,10 @@ import Layout from "../../layouts/Layout.astro";
 import Post from "../../components/Post.astro";
 import Paginate from "../../components/Paginate.astro";
 import fetchApi from '../../lib/strapi';
-import type Article from '../../interfaces/article';
+import type Tag from '../../interfaces/tag';
 import config from "../../../public/site/config.json";
 
-const tags = await fetchApi<Article[]>({
+const tags = await fetchApi<Tag[]>({
     endpoint: `tags?pagination[pageSize]=100000&populate=*&sort=id:desc`,
 });
 
@@ -19,14 +19,9 @@ const allTags = Array.isArray(tags) ? tags : ('data' in tags && tags['data']) ||
   <main>
     <div class="t-container t-max-w-7xl t-py-32 t-text-center">
       <h1 class="t-mb-10 t-font-p t-text-5xl t-text-white">Tags</h1>
-
-
-
-
-
       {allTags.map(tag => (
           <a
-  href={`/tags/${tag.attributes.slug}`}
+  href={`/tag/${tag.attributes.slug}`}
   class="t-mr-5 t-mb-5 t-inline-block t-rounded-lg t-border t-border-grey t-px-6 t-py-2 t-text-sm t-text-grey hover:t-border-white hover:t-bg-white hover:t-text-dark
 "
 >{tag.attributes.title}</a>
