@@ -1,18 +1,24 @@
 ---
-const { date } = Astro.props;
-// var date3 = new Date(date);
+const { dateCreated, dateUpdated } = Astro.props;
 ---
 
 <time
   class="t-mb-4 t-flex t-items-center t-font-s t-text-sm t-text-grey md:t-text-base"
-  datetime={date}
+  datetime={dateCreated === dateUpdated ? dateCreated : dateUpdated}
 >
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="t-mr-2">
     <path
       fill="#888989"
-      fill-rule="nonzero"
+      fillRule="nonzero"
       d="M10 0C4.476 0 0 4.476 0 10s4.476 10 10 10 10-4.476 10-10S15.524 0 10 0Zm0 18.065A8.062 8.062 0 0 1 1.935 10 8.062 8.062 0 0 1 10 1.935 8.062 8.062 0 0 1 18.065 10 8.062 8.062 0 0 1 10 18.065Zm2.492-4.21-3.423-2.488a.487.487 0 0 1-.198-.391V4.355c0-.266.218-.484.484-.484h1.29c.266 0 .484.218.484.484v5.714l2.694 1.96c.217.156.262.459.104.677l-.758 1.044a.487.487 0 0 1-.677.105Z"
     ></path>
   </svg>
-  <span><span class="t-hidden md:t-inline-block">Updated</span> {date}</span>
+  <span>
+    <span class="t-hidden md:t-inline-block">
+      {dateCreated === dateUpdated ? 'Created' : 'Updated'}
+    </span>
+    {new Date(dateCreated === dateUpdated ? dateCreated : dateUpdated).toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' })}
+  </span>
 </time>
+
+

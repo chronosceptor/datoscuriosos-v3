@@ -46,8 +46,8 @@ const article = Astro.props;
 					</h1>
 
 					{
-						article.attributes.publishedAt && (
-							<PostDate date={article.attributes.publishedAt} />
+						article.attributes.createdAt && article.attributes.updatedAt && (
+							<PostDate dateCreated={article.attributes.createdAt} dateUpdated={article.attributes.updatedAt} />
 						)
 					}
 				</div>
