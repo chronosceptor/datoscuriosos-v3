@@ -19,11 +19,12 @@ export async function getStaticPaths({ paginate }: { paginate: any }) {
   endpoint: `articles?filters[tags][id][$eq]=${(Array.isArray(tag) ? tag[0].id : tag.id)}&pagination[pageSize]=100000&sort=id:desc&populate=*`,
 });
 
-    // Use paginate for each set of filtered posts
-    const paginatedPaths = await paginate(articles, {
-      pageSize: config.pageSize,
-      params: { tag },
-    });
+const paginatedPaths = await paginate(articles, {
+  pageSize: config.pageSize,
+  params: { [(Array.isArray(tag) ? tag[0].attributes.slug : tag.attributes.slug)]: true },
+});
+
+
 
     return paginatedPaths;
   });
