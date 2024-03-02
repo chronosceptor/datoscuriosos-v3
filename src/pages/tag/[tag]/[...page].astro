@@ -10,16 +10,16 @@ import config from "../../../../public/site/config.json";
 export async function getStaticPaths({ paginate }: { paginate: any }) {
   // Fetch tags
   const tags = await fetchApi<Tag[]>({
-    endpoint: "tags?pagination[pageSize]=100000&populate=*&sort=id:desc",
-    wrappedByKey: "data",
-  });
+  endpoint: "tags?pagination[pageSize]=100000&populate=*&sort=id:desc",
+  wrappedByKey: "data",
+}) || [];
 
   // Use Promise.all to run asynchronous operations concurrently
   const pathsPromises = tags.map(async (tag) => {
     // Fetch articles for each tag
     const articles = await fetchApi<Article[]>({
-      endpoint: `articles?filters[tags][id][$eq]=${tag.id}&pagination[pageSize]=100000&sort=id:desc&populate=*`,
-    });
+  endpoint: `articles?filters[tags][id][$eq]=${(Array.isArray(tag) ? tag[0].id : tag.id)}&pagination[pageSize]=100000&sort=id:desc&populate=*`,
+});
 
     // Use paginate for each set of filtered posts
     const paginatedPaths = await paginate(articles, {
