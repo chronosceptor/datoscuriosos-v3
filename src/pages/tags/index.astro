@@ -20,12 +20,13 @@ const allTags = Array.isArray(tags) ? tags : ('data' in tags && tags['data']) ||
     <div class="t-container t-max-w-7xl t-py-32 t-text-center">
       <h1 class="t-mb-10 t-font-p t-text-5xl t-text-white">Tags</h1>
       {allTags.map(tag => (
-          <a
-  href={`/tag/${tag.attributes.slug}`}
-  class="t-mr-5 t-mb-5 t-inline-block t-rounded-lg t-border t-border-grey t-px-6 t-py-2 t-text-sm t-text-grey hover:t-border-white hover:t-bg-white hover:t-text-dark
-"
->{tag.attributes.title}</a>
-      ))}
+        <a
+            href={`/tag/${Array.isArray(tag) ? tag[0].attributes.slug : (tag as Tag).attributes.slug}`}
+            class="t-mr-5 t-mb-5 t-inline-block t-rounded-lg t-border t-border-grey t-px-6 t-py-2 t-text-sm t-text-grey hover:t-border-white hover:t-bg-white hover:t-text-dark"
+        >
+            {(tag as Tag).attributes.title}
+        </a>
+    ))}
     </div>
   </main>
 </Layout>
