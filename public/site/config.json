@@ -33,22 +33,22 @@
         },
         {
             "name": "Acerca",
-            "url": "https://datoscuriosos.org/acerca",
+            "url": "/acerca",
             "target": "_self"
         },
         {
             "name": "Contacto",
-            "url": "https://datoscuriosos.org/contacto",
+            "url": "/contacto",
             "target": "_self"
         },
         {
             "name": "Privacy Policy",
-            "url": "https://datoscuriosos.org/privacy-policy",
+            "url": "/privacy-policy",
             "target": "_self"
         },
         {
             "name": "Disclaimer",
-            "url": "https://datoscuriosos.org/disclaimer",
+            "url": "/disclaimer",
             "target": "_self"
         },
         {
