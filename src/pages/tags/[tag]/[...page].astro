@@ -8,36 +8,35 @@ import type Article from "../../../interfaces/article";
 import config from "../../../../public/site/config.json";
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
-	const tags = await fetchApi<Tag[]>({
-		endpoint: `tags?pagination[pageSize]=10000&populate=*&sort=id:desc`,
-		wrappedByKey: `data`,
-	});
+  const tags = await fetchApi<Tag[]>({
+    endpoint: `tags?pagination[pageSize]=10000&populate=*&sort=id:desc`,
+    wrappedByKey: `data`,
+  });
 
-	return tags.map(async (tag: any) => {
-		const articles = await fetchApi<Article[]>({
-			endpoint: `articles?filters[tags][id][$eq]=${
-				Array.isArray(tag) ? tag[0].id : tag.id
-			}&pagination[pageSize]=10000&sort=id:desc&populate=*`,
-			wrappedByKey: `data`,
-		});
+  // Use Promise.all to wait for all async operations to complete
+  const articlesPromises = tags.map(async (tag: any) => {
+    const articles = await fetchApi<Article[]>({
+      endpoint: `articles?filters[tags][id][$eq]=${
+        Array.isArray(tag) ? tag[0].id : tag.id
+      }&pagination[pageSize]=10000&sort=id:desc`,
+      wrappedByKey: `data`,
+    });
 
-		return paginate(articles, {
+    return { tag, articles };
+  });
+
+  const tagArticlesPairs = await Promise.all(articlesPromises);
+
+  return paginate(tagArticlesPairs[0].articles, {
 			pageSize: config.pageSize,
 			params: {
-				tag: tag.attributes.slug,
+				tag: tagArticlesPairs[0].tag.attributes.slug,
 			},
-			props: articles,
-		});
 	});
 }
 
-const { tag } = Astro.params;
-const {
-	page,
-}: {
-	page: { data: any[]; url: { current: string; prev: string; next: string } };
-} = Astro.props;
-console.log(page.data);
+const { page }: { page: { data: any[]; url: { current: string; prev: string; next: string } } } = Astro.props;
+
 ---
 
 <Layout image="">
