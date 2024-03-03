@@ -2,66 +2,65 @@
 import Layout from "../../../layouts/Layout.astro";
 import Post from "../../../components/Post.astro";
 import Paginate from "../../../components/Paginate.astro";
-import fetchApi from '../../../lib/strapi';
-import type Tag from '../../../interfaces/tag';
-import type Article from '../../../interfaces/article';
+import fetchApi from "../../../lib/strapi";
+import type Tag from "../../../interfaces/tag";
+import type Article from "../../../interfaces/article";
 import config from "../../../../public/site/config.json";
 
-
 export async function getStaticPaths({ paginate }: { paginate: any }) {
-
-	// Fetch tags
 	const tags = await fetchApi<Tag[]>({
 		endpoint: `tags?pagination[pageSize]=10000&populate=*&sort=id:desc`,
 		wrappedByKey: `data`,
 	});
 
 	return tags.map(async (tag: any) => {
-
 		const articles = await fetchApi<Article[]>({
-			endpoint: `articles?filters[tags][id][$eq]=${Array.isArray(tag) ? tag[0].id : tag.id}&pagination[pageSize]=10000&sort=id:desc&populate=*`,
+			endpoint: `articles?filters[tags][id][$eq]=${
+				Array.isArray(tag) ? tag[0].id : tag.id
+			}&pagination[pageSize]=10000&sort=id:desc&populate=*`,
 			wrappedByKey: `data`,
 		});
 
 		return paginate(articles, {
-	    	pageSize: config.pageSize,
+			pageSize: config.pageSize,
 			params: {
-				tag: tag.id
+				tag: tag.attributes.slug,
 			},
-  		});
+			props: articles,
+		});
 	});
 }
 
 const { tag } = Astro.params;
-const { page }: { page: { data: any[]; url: { current: string; prev: string; next: string } } } = Astro.props;
-// console.log(page.data);
-
-
-
+const {
+	page,
+}: {
+	page: { data: any[]; url: { current: string; prev: string; next: string } };
+} = Astro.props;
+console.log(page.data);
 ---
 
 <Layout image="">
-  <main>
-    <div class="t-container t-max-w-7xl t-py-10">
-      {
-          page.data.map((article:any) => (
-          <Post
-            title={article.attributes.title}
-            slug={article.attributes.slug}
-            dateCreated={article.attributes.createdAt}
-            dateUpdated={article.attributes.updatedAt}
-            image={article.attributes.image}
-            tags={article.attributes.tags}
-          />
-        ))
-      }
+	<main>
+		<div class="t-container t-max-w-7xl t-py-10">
+			{
+				page.data.map((article: any) => (
+					<Post
+						title={article.attributes.title}
+						slug={article.attributes.slug}
+						dateCreated={article.attributes.createdAt}
+						dateUpdated={article.attributes.updatedAt}
+						image={article.attributes.image}
+						tags={article.attributes.tags}
+					/>
+				))
+			}
 
-      <Paginate
-      current={page.url.current}
-      prev={page.url.prev}
-      next={page.url.next}
-      />
-
-    </div>
-  </main>
+			<Paginate
+				current={page.url.current}
+				prev={page.url.prev}
+				next={page.url.next}
+			/>
+		</div>
+	</main>
 </Layout>
