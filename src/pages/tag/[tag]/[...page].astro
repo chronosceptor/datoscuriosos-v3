@@ -1,50 +1,42 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import fetchApi from '../../../lib/strapi';
-import type Tag from '../../../interfaces/tag';
-import type Article from '../../../interfaces/article';
+import Post from "../../../components/Post.astro";
+import Paginate from "../../../components/Paginate.astro";
+import fetchApi from "../../../lib/strapi";
+import type Tag from "../../../interfaces/tag";
+import type Article from "../../../interfaces/article";
 import config from "../../../../public/site/config.json";
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
-  // Fetch tags
-  const tags = await fetchApi<Tag[]>({
-  endpoint: "tags?pagination[pageSize]=100000&populate=*&sort=id:desc",
-  wrappedByKey: "data",
-}) || [];
+	// Fetch tags
+	const tags =
+		(await fetchApi<Tag[]>({
+			endpoint:
+				"tags?pagination[pageSize]=100000&populate=*&sort=id:desc",
+			wrappedByKey: "data",
+		})) || [];
 
-  // Use Promise.all to run asynchronous operations concurrently
-  const pathsPromises = tags.map(async (tag) => {
-    // Fetch articles for each tag
-    const articles = await fetchApi<Article[]>({
-  endpoint: `articles?filters[tags][id][$eq]=${(Array.isArray(tag) ? tag[0].id : tag.id)}&pagination[pageSize]=100000&sort=id:desc&populate=*`,
-});
+	return tags.map(async (tag) => {
+		const articles =
+			(await fetchApi<Article[]>({
+				endpoint: `articles?filters[tags][id][$eq]=${
+					Array.isArray(tag) ? tag[0].id : tag.id
+				}&pagination[pageSize]=100000&sort=id:desc&populate=*`,
+				wrappedByKey: "data",
+			})) || [];
 
-const paginatedPaths = await paginate(articles, {
-  pageSize: config.pageSize,
-  params: { [(Array.isArray(tag) ? tag[0].attributes.slug : tag.attributes.slug)]: true },
-});
-
-
-
-    return paginatedPaths;
-  });
-
-  try {
-    // Wait for all promises to resolve
-    const pathsResults = await Promise.all(pathsPromises);
-
-    // Combine and return paths for all tags
-    return pathsResults.reduce((acc, curr) => [...acc, ...curr], []);
-  } catch (error) {
-    console.error("Error in getStaticPaths:", error);
-    return [];
-  }
+		return paginate(articles, [
+			{ pageSize: config.pageSize },
+			{
+				params: {
+					tag: Array.isArray(tag) ? tag[0].attributes.slug : tag.attributes.slug,
+				}
+			},
+			{ props: { articles } },
+		]);
+	});
 }
-
 
 ---
 
-
-<Layout>
-
-</Layout>
+<Layout image="">hola</Layout>
