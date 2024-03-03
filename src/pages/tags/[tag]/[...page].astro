@@ -1,0 +1,37 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Post from "../../../components/Post.astro";
+import Paginate from "../../../components/Paginate.astro";
+import fetchApi from "../../../lib/strapi";
+import type Tag from "../../../interfaces/tag";
+import type Article from "../../../interfaces/article";
+import config from "../../../../public/site/config.json";
+
+export async function getStaticPaths(): Promise<any> {
+
+	// Fetch tags
+	const tags = await fetchApi<Tag[]>({
+		endpoint: `tags?pagination[pageSize]=100000&populate=*&sort=id:desc`,
+		wrappedByKey: "data",
+	});
+
+	return tags.map(async (tag) => {
+		const articles = await fetchApi<Article[]>({
+			endpoint: `articles?filters[tags][id][$eq]=${Array.isArray(tag) ? tag[0].id : tag.id}&pagination[pageSize]=100000&sort=id:desc&populate=*`,
+			wrappedByKey: "data",
+		});
+
+
+		return {
+     		params: { tag },
+    		props: { articles: articles },
+    	}
+
+	});
+}
+
+const { tag } = Astro.params
+const { articles }: { articles: any } = Astro.props
+---
+
+<Layout image="">hola</Layout>
