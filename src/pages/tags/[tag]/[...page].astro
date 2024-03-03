@@ -16,23 +16,19 @@ export async function getStaticPaths({ paginate }: { paginate: any }) {
 		wrappedByKey: `data`,
 	});
 
-	return tags.map(async (tag) => {
+	return tags.map(async (tag: any) => {
 
 		const articles = await fetchApi<Article[]>({
 			endpoint: `articles?filters[tags][id][$eq]=${Array.isArray(tag) ? tag[0].id : tag.id}&pagination[pageSize]=10000&sort=id:desc&populate=*`,
 			wrappedByKey: `data`,
 		});
 
-		console.log(tag.attributes.slug);
-
-		// return paginate(articles, [
-		// 	{ pageSize: config.pageSize },
-		// 	{
-		// 		params: {
-		// 			tag: Array.isArray(tag) ? tag[0].attributes.slug : tag.attributes.slug,
-		// 		}
-		// 	},
-		// ]);
+		return paginate(articles, {
+	    	pageSize: config.pageSize,
+			params: {
+				tag: tag.id
+			},
+  		});
 	});
 }
 
