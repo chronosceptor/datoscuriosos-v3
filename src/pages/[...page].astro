@@ -2,49 +2,49 @@
 import Layout from "../layouts/Layout.astro";
 import Post from "../components/Post.astro";
 import Paginate from "../components/Paginate.astro";
-import fetchApi from '../lib/strapi';
-import type Article from '../interfaces/article';
+import fetchApi from "../lib/strapi";
+import type Article from "../interfaces/article";
 import config from "../../public/site/config.json";
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
-  const articles = await fetchApi<Article[]>({
-    endpoint: `articles?pagination[pageSize]=100000&populate=*&sort=id:desc`,
-  });
+	const articles = await fetchApi<Article[]>({
+		endpoint: `articles?pagination[pageSize]=100000&populate=*&sort=id:desc`,
+		wrappedByKey: "data",
+	});
 
-  const paginatedArticles = Array.isArray(articles) ? articles : ('data' in articles && articles['data']) || [];
-
-  return paginate(paginatedArticles, {
-    pageSize: config.pageSize,
-  });
+	return paginate(articles, {
+		pageSize: config.pageSize,
+	});
 }
 
-const { page }: { page: { data: any[]; url: { current: string; prev: string; next: string } } } = Astro.props;
-// console.log(page.data);
-
+const {
+	page,
+}: {
+	page: { data: any[]; url: { current: string; prev: string; next: string } };
+} = Astro.props;
 ---
 
 <Layout image="">
-  <main>
-    <div class="t-container t-max-w-7xl t-py-10">
-      {
-          page.data.map((article:any) => (
-          <Post
-            title={article.attributes.title}
-            slug={article.attributes.slug}
-            dateCreated={article.attributes.createdAt}
-            dateUpdated={article.attributes.updatedAt}
-            image={article.attributes.image}
-            tags={article.attributes.tags}
-          />
-        ))
-      }
+	<main>
+		<div class="t-container t-max-w-7xl t-py-10">
+			{
+				page.data.map((article: any) => (
+					<Post
+						title={article.attributes.title}
+						slug={article.attributes.slug}
+						dateCreated={article.attributes.createdAt}
+						dateUpdated={article.attributes.updatedAt}
+						image={article.attributes.image}
+						tags={article.attributes.tags}
+					/>
+				))
+			}
 
-      <Paginate
-      current={page.url.current}
-      prev={page.url.prev}
-      next={page.url.next}
-      />
-
-    </div>
-  </main>
+			<Paginate
+				current={page.url.current}
+				prev={page.url.prev}
+				next={page.url.next}
+			/>
+		</div>
+	</main>
 </Layout>
