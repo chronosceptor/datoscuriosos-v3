@@ -18,7 +18,7 @@ export async function getStaticPaths({ paginate }: { paginate: any }) {
 		const articles = await fetchApi<Article[]>({
 			endpoint: `articles?filters[tags][id][$eq]=${
 				Array.isArray(tag) ? tag[0].id : tag.id
-			}&pagination[pageSize]=10000&sort=id:desc`,
+			}&pagination[pageSize]=10000&populate=*&sort=id:desc`,
 			wrappedByKey: `data`,
 		});
 

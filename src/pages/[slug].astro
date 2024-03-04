@@ -3,14 +3,10 @@ import fetchApi from "../lib/strapi";
 import type Article from "../interfaces/article";
 import Layout from "../layouts/Layout.astro";
 // import PostTags from "../components/PostTags.astro";
-
 import Content from "../components/Content.astro";
-
 import PostDate from "../components/PostDate.astro";
-
 import BgPicture from "../components/BgPicture.astro";
 import AdNative from "../components/AdNative.astro";
-
 import "../css/slug.scss";
 
 export async function getStaticPaths() {
@@ -46,9 +42,13 @@ const article = Astro.props;
 					</h1>
 
 					{
-						article.attributes.createdAt && article.attributes.updatedAt && (
-							<PostDate dateCreated={article.attributes.createdAt} dateUpdated={article.attributes.updatedAt} />
-						)
+						article.attributes.createdAt &&
+							article.attributes.updatedAt && (
+								<PostDate
+									dateCreated={article.attributes.createdAt}
+									dateUpdated={article.attributes.updatedAt}
+								/>
+							)
 					}
 				</div>
 
@@ -71,7 +71,7 @@ const article = Astro.props;
 				<div>
 					{
 						article.attributes.content && (
-							<Content content={article.attributes.content}/>
+							<Content content={article.attributes.content} />
 						)
 					}
 				</div>

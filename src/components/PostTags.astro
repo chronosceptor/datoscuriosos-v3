@@ -1,20 +1,21 @@
 ---
-// export interface Props {
-// 	tags: string;
-// }
-// const { tags } = Astro.props;
+export interface Props {
+  tags: { data: Array<{ attributes: { slug: string; title: string } }> };
+}
+
+const { tags } = Astro.props;
 ---
 
-<!-- <div>
-	{
-		tags.data.map((tag) => (
-			<a
-				href={`/tags/${tag.attributes.slug}`}
-				class="t-mr-2 t-hidden t-rounded-lg t-border t-border-grey t-px-3 t-py-1 t-text-sm t-text-grey hover:t-border-white hover:t-bg-white hover:t-text-dark lg:t-inline-block
-          "
-			>
-				{tag.attributes.title}
-			</a>
-		))
-	}
-</div> -->
+<div>
+  {
+    tags &&
+      tags.data.map((tag) => (
+        <a
+          href={`/tags/${tag.attributes.slug}`}
+          class="t-mr-2 t-hidden t-rounded-lg t-border t-border-grey t-px-3 t-py-1 t-text-sm t-text-grey hover:t-border-white hover:t-bg-white hover:t-text-dark lg:t-inline-block"
+        >
+          {tag.attributes.title}
+        </a>
+      ))
+  }
+</div>

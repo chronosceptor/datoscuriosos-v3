@@ -9,8 +9,6 @@ const tags = await fetchApi<Tag[]>({
 });
 
 const allTags = Array.isArray(tags) ? tags : ('data' in tags && tags['data']) || [];
-
-
 ---
 
 <Layout title={config.siteName}>
