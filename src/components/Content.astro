@@ -1,8 +1,6 @@
 ---
-// import { marked } from 'marked';
+import { marked } from 'marked';
 const { content } = Astro.props;
 ---
 
-<!-- <div class="rtm t-mb-16 t-text-white" set:html={marked.parse(content)}  /> -->
-<div class="rtm t-mb-16 t-text-white" set:html={content}  />
-
+<div class="rtm t-mb-16 t-text-white" set:html={marked.parse(content)}  />

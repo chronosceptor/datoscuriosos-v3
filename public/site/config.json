@@ -2,7 +2,7 @@
     "siteName": "Datos Curiosos",
     "siteDomain": "datoscuriosos.org",
     "siteLogo": "img/logo.png",
-    "pageSize": 5,
+    "pageSize": 20,
     "headerNav": [
         {
             "name": "Inicio",
