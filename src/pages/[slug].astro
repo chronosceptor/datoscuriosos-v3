@@ -2,7 +2,7 @@
 import fetchApi from "../lib/strapi";
 import type Article from "../interfaces/article";
 import Layout from "../layouts/Layout.astro";
-// import PostTags from "../components/PostTags.astro";
+import PostTags from "../components/PostTags.astro";
 import Content from "../components/Content.astro";
 import PostDate from "../components/PostDate.astro";
 import BgPicture from "../components/BgPicture.astro";
@@ -78,7 +78,7 @@ const article = Astro.props;
 				<div>
 					<AdNative />
 				</div>
-				<!-- {article.attributes.tags && <PostTags tags={article.attributes.tags} />} -->
+				{article.attributes.tags && <PostTags tags={article.attributes.tags} />}
 			</div>
 		</div>
 	</main>
