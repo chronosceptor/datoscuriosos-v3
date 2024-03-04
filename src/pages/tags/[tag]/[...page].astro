@@ -40,10 +40,11 @@ export async function getStaticPaths({ paginate }: { paginate: any }) {
 }
 
 const {
-	page,
+  page,
 }: {
-	page: { data: any[]; url: { current: string; prev: string; next: string } };
-} = Astro.props;
+  page: { data: any[]; url: { current: string; prev: string; next: string } };
+} = Astro.props as { page: { data: any[]; url: { current: string; prev: string; next: string } } };
+
 ---
 
 <Layout image="">
