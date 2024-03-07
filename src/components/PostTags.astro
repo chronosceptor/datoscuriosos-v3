@@ -1,7 +1,5 @@
 ---
-export interface Props {
-  tags: { data: Array<{ attributes: { slug: string; title: string } }> };
-}
+import type Tag from "../interfaces/tag";
 
 const { tags } = Astro.props;
 ---
