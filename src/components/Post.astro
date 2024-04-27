@@ -20,7 +20,7 @@ const { title, slug, dateCreated, dateUpdated, image, tags } = Astro.props;
     <div>
       <PostTitle slug={slug} title={title} />
       <PostDate dateCreated={dateCreated} dateUpdated={dateUpdated}/>
-      <PostTags tags={tags} />
+      <PostTags tags={tags} class="t-justify-start"/>
     </div>
   </div>
 </div>
