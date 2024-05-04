@@ -53,7 +53,7 @@
         },
         {
             "name": "DMCA",
-            "url": "https://datoscuriosos.org/dmca",
+            "url": "/dmca",
             "target": "_self"
         }
     ]
