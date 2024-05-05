@@ -9,29 +9,34 @@ import fetchApi from "../../../lib/strapi";
 import config from "../../../../public/site/config.json";
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
-	const tags = await fetchApi<Tag[]>({
-		endpoint: `tags?pagination[pageSize]=10000&populate=*&sort=id:desc`,
-		wrappedByKey: `data`,
-	});
+  const tags = await fetchApi<Tag[]>({
+    endpoint: `tags?pagination[pageSize]=10000&populate=*&sort=id:desc`,
+    wrappedByKey: `data`,
+  });
 
-	// Use Promise.all to wait for all async operations to complete
-	const articlesPromises = tags.map(async (tag: any) => {
-		const articles = await fetchApi<Article[]>({
-			endpoint: `articles?filters[tags][id][$eq]=${
-				Array.isArray(tag) ? tag[0].id : tag.id
-			}&pagination[pageSize]=10000&populate=*&sort=id:desc`,
-			wrappedByKey: `data`,
-		});
-		return { tag, articles };
-	});
+  const chunkSize = 5; // Number of requests to make at a time
+  const results = [];
 
-	const tagArticlesPairs = await Promise.all(articlesPromises);
+  for (let i = 0; i < tags.length; i += chunkSize) {
+    const chunk = tags.slice(i, i + chunkSize);
+    const promises = chunk.map(async (tag: any) => {
+      const articles = await fetchApi<Article[]>({
+        endpoint: `articles?filters[tags][id][$eq]=${
+          Array.isArray(tag) ? tag[0].id : tag.id
+        }&pagination[pageSize]=10000&populate=*&sort=id:desc`,
+        wrappedByKey: `data`,
+      });
+      return { tag, articles };
+    });
+    const chunkResults = await Promise.all(promises);
+    results.push(...chunkResults);
+  }
 
-	const paginatedResults = tagArticlesPairs.flatMap((pair) => {
-		return paginate(pair.articles, {
-			pageSize: config.pageSize,
-			params: {
-				tag: pair.tag.attributes.slug,
+  const paginatedResults = results.flatMap((pair) => {
+    return paginate(pair.articles, {
+      pageSize: config.pageSize,
+      params: {
+        tag: pair.tag.attributes.slug,
 			},
 		});
 	});
