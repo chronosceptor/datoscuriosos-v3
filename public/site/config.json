@@ -22,16 +22,6 @@
             "target": "_blank"
         },
         {
-            "name": "Twitter",
-            "url": "https://twitter.com/datoscuriosos_o",
-            "target": "_blank"
-        },
-        {
-            "name": "Facebook",
-            "url": "https://www.facebook.com/datoscuriosos.org",
-            "target": "_blank"
-        },
-        {
             "name": "Acerca",
             "url": "/acerca",
             "target": "_self"
@@ -44,16 +34,6 @@
         {
             "name": "Privacy Policy",
             "url": "/privacy-policy",
-            "target": "_self"
-        },
-        {
-            "name": "Disclaimer",
-            "url": "/disclaimer",
-            "target": "_self"
-        },
-        {
-            "name": "DMCA",
-            "url": "/dmca",
             "target": "_self"
         }
     ]
